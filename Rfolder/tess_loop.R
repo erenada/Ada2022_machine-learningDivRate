@@ -38,7 +38,7 @@ library(geiger)
 
 ## Birth-death processes with constant rates
 
-input_dir <- "/data/schwartzlab/eren/Chapter3UltrametricTrees"
+input_dir <- "/data/schwartzlab/eren/Chapter3/UltrametricTrees"
 
 #test_input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/"
 
