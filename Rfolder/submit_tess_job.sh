@@ -13,4 +13,4 @@ module purge
 
 module load R/4.2.0-foss-2021b
 
-RScript tess_loop.R
+Rscript tess_loop.R
