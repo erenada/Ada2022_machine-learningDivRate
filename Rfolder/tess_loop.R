@@ -38,7 +38,7 @@ library(geiger)
 
 ## Birth-death processes with constant rates
 
-Sys.setenv("DISPLAY"=":0")
+Sys.setenv("DISPLAY"=":0.0")
 
 input_dir <- "/data/schwartzlab/eren/Chapter3/UltrametricTrees"
 
@@ -98,7 +98,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     write.csv(samplesConstBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesConstBD.csv", sep=""))
 
-    jpeg(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesConstBD.jpeg", sep=""),quality = 75)
+    pdf(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesConstBD.pdf", sep=""),width=10, height=10)
 
     plot(samplesConstBD)
 
@@ -141,7 +141,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     write.csv(samplesDecrBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesDecrBD", sep=""))
 
-    jpeg(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesDecrBD.jpg", sep=""),quality = 75)
+    pdf(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesDecrBD.pdf", sep=""),height=10, width=10)
 
     plot(samplesDecrBD)
 
@@ -195,7 +195,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     write.csv(samplesEpisodicBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesEpisodicBD", sep=""))
 
-    jpeg(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesEpisodicBD.jpg", sep=""),quality = 75)
+    pdf(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesEpisodicBD.pdf", sep=""),height=10,width=10)
 
     plot(samplesEpisodicBD)
 
@@ -248,7 +248,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     write.csv(samplesEpisodicBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesMassExtinctionBD", sep=""))
 
-    jpeg(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesMassExtinctionBD.jpg", sep=""),quality = 75)
+    pdf(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesMassExtinctionBD.pdf", sep=""),height=10,width=10)
 
     plot(samplesEpisodicBD)
 
