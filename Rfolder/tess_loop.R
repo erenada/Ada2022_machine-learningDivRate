@@ -1,13 +1,6 @@
 ## ultimate calculation of div rates.
 
 
-install.packages("ape")
-install.packages("phangorn")
-install.packages("dplyr")
-install.packages("TESS")
-install.packages("geiger")
-
-
 library(ape)
 library(phangorn)
 library(dplyr)
