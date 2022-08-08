@@ -8,40 +8,40 @@ library(geiger)
 
 ## scaling the true species tree's branch lengths
 
-dataset1Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
+#dataset1Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
 
-dataset1Tree <- rescale(dataset1Tree, "depth", 1)
+#dataset1Tree <- rescale(dataset1Tree, "depth", 1)
 
-write.tree(dataset1Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
+#write.tree(dataset1Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
 
-dataset2Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset2/s_tree.trees")
+#dataset2Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset2/s_tree.trees")
 
-dataset2Tree <- rescale(dataset2Tree, "depth", 1)
+#dataset2Tree <- rescale(dataset2Tree, "depth", 1)
 
-write.tree(dataset2Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
+#write.tree(dataset2Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
 
-dataset3Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
+#dataset3Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
 
-dataset3Tree <- rescale(dataset3Tree, "depth", 1)
+#dataset3Tree <- rescale(dataset3Tree, "depth", 1)
 
-write.tree(dataset3Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
+#write.tree(dataset3Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
 
-dataset4Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
+#dataset4Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
 
-dataset4Tree <- rescale(dataset4Tree, "depth", 1)
+#dataset4Tree <- rescale(dataset4Tree, "depth", 1)
 
-write.tree(dataset4Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
+#write.tree(dataset4Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
 
 
 ## # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
 ## Birth-death processes with constant rates
 
-input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees"
+input_dir <- "/data/schwartzlab/eren/Chapter3UltrametricTrees"
 
-test_input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/"
+#test_input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/"
 
-out_dir <- "/Users/eren/Documents/GitHub/Chapter3/outdir"
+out_dir <- "/data/schwartzlab/eren/Chapter3/outdir"
 
 #tree_object <- read.tree("../UltrametricTrees/Dataset1/inference_fong_best600.txt.treefile")
 
