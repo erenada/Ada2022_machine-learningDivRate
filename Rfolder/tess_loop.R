@@ -250,7 +250,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     pdf(paste(out_dir,"/",dataset,"/","plot_",tree,"_samplesMassExtinctionBD.pdf", sep=""),height=10,width=10)
 
-    plot(samplesEpisodicBD)
+    plot(samplesMassExtinctionBD)
 
     dev.off()
 
