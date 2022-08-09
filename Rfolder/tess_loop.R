@@ -253,9 +253,9 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     plot(samplesEpisodicBD)
 
     dev.off()
-    
+
     ##model evaluation with Bayesian Factore comparison
-    
+
     marginalLikelihoodConstBD <- tess.steppingStoneSampling(
       likelihoodFunction = likelihoodConstBD,
       priors = priorsConstBD,
@@ -264,7 +264,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       iterations = 1000,
       burnin = 100,
       K = 50)
-    
+
     marginalLikelihoodDecrBD <- tess.steppingStoneSampling(
       likelihoodFunction = likelihoodDecrBD,
       priors = priorsDecrBD,
@@ -273,7 +273,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       iterations = 1000,
       burnin = 100,
       K = 50)
-    
+
       marginalLikelihoodEpisodicBD <- tess.steppingStoneSampling(
       likelihoodFunction = likelihoodEpisodicBD,
       priors = priorsEpisodicBD,
@@ -282,8 +282,8 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       iterations = 1000,
       burnin = 100,
       K = 50)
-    
-    
+
+
     marginalLikelihoodMassExtinctionBD <- tess.steppingStoneSampling(
       likelihoodFunction = likelihoodMassExtinctionBD,
       priors = priorsMassExtinctionBD,
@@ -292,34 +292,34 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       iterations = 1000,
       burnin = 100,
       K = 50)
-    
+
     candidateModels <- c("ConstBD"=marginalLikelihoodConstBD,
                          "DecrBD"=marginalLikelihoodDecrBD,
                          "EpisodicBD"=marginalLikelihoodEpisodicBD,
                          "MassExtinctionBD"=marginalLikelihoodMassExtinctionBD)
-    
+
     marginalLikelihoodGrid <- expand.grid(M0=names(candidateModels),
                                           M1=names(candidateModels))
-    
+
     marginalLikelihoodGrid$BF <- 2 * (candidateModels[marginalLikelihoodGrid$M0] -
                                         candidateModels[marginalLikelihoodGrid$M1])
-    
+
     marginalLikelihoodGrid <- marginalLikelihoodGrid[order(marginalLikelihoodGrid$BF,
                                                            decreasing=TRUE),]
-    
-    write.csv(marginalLikelihoodGrid, file = paste(out_dir,"/",dataset,"/","BF_",tree,"ML_GRID"),row.names = F,sep = "\t") 
-    
-    
-    
+
+    write.csv(marginalLikelihoodGrid, file = paste(out_dir,"/",dataset,"/","BF_",tree,"ML_GRID",sep=""),row.names = F,sep = "\t")
+
+
+
     ## model evaluation with posteior-predictive simulations # ConstBD
-    
+
     tmrca <- max( times )
-    
+
     simConstBD <- function(params) {
-      
+
       ConstBD_speciation <- params[1] + params[2]
       ConstBD_extinction <- params[2]
-      
+
       repeat {
         ConstBD_tree <- tess.sim.age(n = 1,
                                      age = tmrca,
@@ -329,53 +329,53 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                      MRCA = TRUE)[[1]]
         if (ConstBD_tree$Nnode > 1) break }
       return (ConstBD_tree) }
-    
+
     treesConstBD <- tess.PosteriorPrediction(simConstBD,samplesConstBD)
-    
-    
+
+
     # compute the number of species in each simulate ConstBD_tree
     numTaxaConstBD <- c()
     for (i in 1:length(treesConstBD)){
       numTaxaConstBD[i] <- treesConstBD[[i]]$Nnode + 1 }
-    
+
     numTaxaPPDI_ConstBD <- quantile(numTaxaConstBD,prob=c(0.025,0.975))
-    
+
     observedGamma <- gammaStat(tree_object)
-    
+
     ConstBD_ppt <- tess.PosteriorPredictiveTest(treesConstBD,tree_object,
                                                 gammaStat)
     ConstBD_gammaPPDI <- quantile(ConstBD_ppt[[1]],prob=c(0.025,0.975))
-    
-    
+
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesConstBD.pdf", sep=""),height=6,width=18)
-    
+
     par(mfrow=c(1,3))
-    
-    
+
+
     plot(density(numTaxaConstBD),main="Number of taxa",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=numTaxaPPDI_ConstBD,lty=2,col="gray",lwd=2) +
       points(tree_object$Nnode+1,0,pch="x") + title(sub = "(A)", xlab = "Frequency")
-    
-    
+
+
     ltt.plot(treesConstBD[[1]],backward=FALSE,col="gray",log="y",
              ylim=c(1,max(200)),main="LTT-plot") + ltt.lines(tree_object,backward=FALSE,lwd=3) +
       for (i in 2:min(100,length(treesConstBD))) ltt.lines(treesConstBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
-    
-    
+
+
     plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=ConstBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
-    
-    
+
+
     dev.off()
-    
+
     ## PPD DecrBD
-    
+
     simDecrBD <- function(params) {
-      
+
       DecrBD_speciation <- function(t) params[1] + params[2] * exp(-params[3]*t)
       DecrBD_extinction <- function(t) params[1]
-      
+
       repeat {
         DecrBD_tree <- tess.sim.age(n = 1,
                                     age = tmrca,
@@ -385,53 +385,53 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                     MRCA = TRUE)[[1]]
         if (DecrBD_tree$Nnode > 1) break }
       return (DecrBD_tree) }
-    
+
     treesDecrBD <- tess.PosteriorPrediction(simDecrBD,samplesDecrBD)
-    
-    
+
+
     # compute the number of species in each simulate DecrBD_tree
     numTaxaDecrBD <- c()
     for (i in 1:length(treesDecrBD)){
       numTaxaDecrBD[i] <- treesDecrBD[[i]]$Nnode + 1 }
-    
+
     numTaxaPPDI_DecrBD <- quantile(numTaxaDecrBD,prob=c(0.025,0.975))
-    
+
     observedGamma <- gammaStat(tree_object)
-    
+
     DecrBD_ppt <- tess.PosteriorPredictiveTest(treesDecrBD,tree_object,
                                                gammaStat)
     DecrBD_gammaPPDI <- quantile(DecrBD_ppt[[1]],prob=c(0.025,0.975))
-    
-    
+
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesDecrBD.pdf", sep=""),height=6,width=18)
-    
+
     par(mfrow=c(1,3))
-    
-    
+
+
     plot(density(numTaxaDecrBD),main="Number of taxa",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=numTaxaPPDI_DecrBD,lty=2,col="gray",lwd=2) +
       points(tree_object$Nnode+1,0,pch="x") + title(sub = "(A)", xlab = "Frequency")
-    
-    
+
+
     ltt.plot(treesDecrBD[[1]],backward=FALSE,col="gray",log="y",
              ylim=c(1,max(200)),main="LTT-plot") + ltt.lines(tree_object,backward=FALSE,lwd=3) +
       for (i in 2:min(100,length(treesDecrBD))) ltt.lines(treesDecrBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
-    
-    
+
+
     plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=DecrBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
-    
-    
+
+
     dev.off()
-    
+
     ## PDD for Episodic
-    
+
     simEpisodicBD <- function(params) {
-      
+
       EpisodicBD_speciation <- c(params[1]+params[2],params[3]+params[4])
       EpisodicBD_extinction <- c(params[2],params[4])
-      
+
       repeat {
         EpisodicBD_tree <- tess.sim.age(n = 1,
                                         age = tmrca,
@@ -441,55 +441,55 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                         MRCA = TRUE)[[1]]
         if (EpisodicBD_tree$Nnode > 1) break }
       return (EpisodicBD_tree) }
-    
+
     treesEpisodicBD <- tess.PosteriorPrediction(simEpisodicBD,samplesEpisodicBD)
-    
-    
+
+
     # compute the number of species in each simulate EpisodicBD_tree
     numTaxaEpisodicBD <- c()
     for (i in 1:length(treesEpisodicBD)){
       numTaxaEpisodicBD[i] <- treesEpisodicBD[[i]]$Nnode + 1 }
-    
+
     numTaxaPPDI_EpisodicBD <- quantile(numTaxaEpisodicBD,prob=c(0.025,0.975))
-    
+
     observedGamma <- gammaStat(tree_object)
-    
+
     EpisodicBD_ppt <- tess.PosteriorPredictiveTest(treesEpisodicBD,tree_object,
                                                    gammaStat)
     EpisodicBD_gammaPPDI <- quantile(EpisodicBD_ppt[[1]],prob=c(0.025,0.975))
-    
-    
+
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesEpisodicBD.pdf", sep=""),height=6,width=18)
-    
+
     par(mfrow=c(1,3))
-    
-    
+
+
     plot(density(numTaxaEpisodicBD),main="Number of taxa",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=numTaxaPPDI_EpisodicBD,lty=2,col="gray",lwd=2) +
       points(tree_object$Nnode+1,0,pch="x") + title(sub = "(A)", xlab = "Frequency")
-    
-    
+
+
     ltt.plot(treesEpisodicBD[[1]],backward=FALSE,col="gray",log="y",
              ylim=c(1,max(200)),main="LTT-plot") + ltt.lines(tree_object,backward=FALSE,lwd=3) +
       for (i in 2:min(100,length(treesEpisodicBD))) ltt.lines(treesEpisodicBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
-    
-    
+
+
     plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=EpisodicBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
-    
-    
+
+
     dev.off()
-    
-    
+
+
     ## PPD for MassExtinction
-    
+
     simMassExtinctionBD <- function(params) {
-      
+
       MassExtinctionBD_speciation <- params[1]+params[2]
       MassExtinctionBD_extinction <- params[2]
       MassExtinctionBD_time <- params[3]
-      
+
       repeat {
         MassExtinctionBD_tree <- tess.sim.age(n = 1,
                                               age = tmrca,
@@ -499,51 +499,46 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                               MRCA = TRUE)[[1]]
         if (MassExtinctionBD_tree$Nnode > 1) break }
       return (MassExtinctionBD_tree) }
-    
+
     treesMassExtinctionBD <- tess.PosteriorPrediction(simMassExtinctionBD,samplesMassExtinctionBD)
-    
-    
+
+
     # compute the number of species in each simulate MassExtinctionBD_tree
     numTaxaMassExtinctionBD <- c()
     for (i in 1:length(treesMassExtinctionBD)){
       numTaxaMassExtinctionBD[i] <- treesMassExtinctionBD[[i]]$Nnode + 1 }
-    
+
     numTaxaPPDI_MassExtinctionBD <- quantile(numTaxaMassExtinctionBD,prob=c(0.025,0.975))
-    
+
     observedGamma <- gammaStat(tree_object)
-    
+
     MassExtinctionBD_ppt <- tess.PosteriorPredictiveTest(treesMassExtinctionBD,tree_object,
                                                          gammaStat)
     MassExtinctionBD_gammaPPDI <- quantile(MassExtinctionBD_ppt[[1]],prob=c(0.025,0.975))
-    
-    
+
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesMassExtinctionBD.pdf", sep=""),height=6,width=18)
-    
+
     par(mfrow=c(1,3))
-    
-    
+
+
     plot(density(numTaxaMassExtinctionBD),main="Number of taxa",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=numTaxaPPDI_MassExtinctionBD,lty=2,col="gray",lwd=2) +
       points(tree_object$Nnode+1,0,pch="x") + title(sub = "(A)", xlab = "Frequency")
-    
-    
+
+
     ltt.plot(treesMassExtinctionBD[[1]],backward=FALSE,col="gray",log="y",
              ylim=c(1,max(200)),main="LTT-plot") + ltt.lines(tree_object,backward=FALSE,lwd=3) +
       for (i in 2:min(100,length(treesMassExtinctionBD))) ltt.lines(treesMassExtinctionBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
-    
-    
+
+
     plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=MassExtinctionBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
-    
-    
+
+
     dev.off()
-  
+
 
   }
 }
-
-
-
-
-
