@@ -307,7 +307,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     marginalLikelihoodGrid <- marginalLikelihoodGrid[order(marginalLikelihoodGrid$BF,
                                                            decreasing=TRUE),]
 
-    write.csv(marginalLikelihoodGrid, file = paste(out_dir,"/",dataset,"/","BF_",tree,"ML_GRID",sep=""),row.names = F,sep = "\t")
+    write.csv(marginalLikelihoodGrid, file = paste(out_dir,"/",dataset,"/","BF_",tree,"ML_GRID",sep=""),row.names = F)
 
 
 
@@ -362,7 +362,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       for (i in 2:min(100,length(treesConstBD))) ltt.lines(treesConstBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
 
 
-    plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
+    plot(density(ConstBD_ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=ConstBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
 
@@ -418,7 +418,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       for (i in 2:min(100,length(treesDecrBD))) ltt.lines(treesDecrBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
 
 
-    plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
+    plot(density(DecrBD_ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=DecrBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
 
@@ -474,7 +474,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       for (i in 2:min(100,length(treesEpisodicBD))) ltt.lines(treesEpisodicBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
 
 
-    plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
+    plot(density(EpisodicBD_ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=EpisodicBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
 
@@ -532,7 +532,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       for (i in 2:min(100,length(treesMassExtinctionBD))) ltt.lines(treesMassExtinctionBD[[i]], backward=FALSE, col="gray") + title(sub = "(B)")
 
 
-    plot(density(ppt[[1]]),main="Gamma Statistic",xlab="",
+    plot(density(MassExtinctionBD_ppt[[1]]),main="Gamma Statistic",xlab="",
          ylab="Posterior Predictive Density",lwd=2) + abline(v=MassExtinctionBD_gammaPPDI,lty=2,col="gray",lwd=2) +
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
 
