@@ -48,7 +48,7 @@ out_dir <- "/data/schwartzlab/eren/Chapter3/outdir"
 
 #tree_object <- read.tree("../../Bird_SISRS/Reference_Trees/JarvisFinalTree.nwk")
 
-dev.off()
+#dev.off()
 
 for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
   for(tree in list.files(paste(input_dir,dataset, sep = "/"))){
@@ -94,10 +94,10 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                 thinning = 10,
                                 adaptive = TRUE,
                                 verbose = TRUE)
-    
+
     print(paste("samplesConstBD","_",tree,"=",sep = ""))
     print(summary(samplesConstBD))
-    
+
     #write.(summary(samplesConstBD), file = paste(out_dir,"/",dataset,"/","sum_samples_",tree,"_samplesConstBD.csv", sep=""))
 
     write.csv(samplesConstBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesConstBD.csv", sep=""))
@@ -141,11 +141,11 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
                                adaptive = TRUE,
                                verbose = TRUE)
 
-    
+
     print(paste("samplesDecrBD","_",tree,"=",sep = ""))
     print(summary(samplesDecrBD))
-    
-    
+
+
     #write.csv(summary(samplesDecrBD), file = paste(out_dir,"/",dataset,"/","sum_samples_",tree,"_samplesDecrBD", sep=""))
 
     write.csv(samplesDecrBD, file = paste(out_dir,"/",dataset,"/","samples_",tree,"_samplesDecrBD", sep=""))
@@ -350,24 +350,24 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       numTaxaConstBD[i] <- treesConstBD[[i]]$Nnode + 1 }
 
     numTaxaPPDI_ConstBD <- quantile(numTaxaConstBD,prob=c(0.025,0.975))
-    
+
     print(paste("numTaxaConstBD","_",tree,"=",mean(numTaxaConstBD),sep=""))
-    
+
     print(paste("numTaxaPPDI_ConstBD","_",tree,"=",numTaxaPPDI_ConstBD,sep = ""))
 
     observedGamma <- gammaStat(tree_object)
-    
+
     print(paste("Observed_Gamma","_",tree," ","=",observedGamma,sep = ""))
 
     ConstBD_ppt <- tess.PosteriorPredictiveTest(treesConstBD,tree_object,
                                                 gammaStat)
-    
+
     print(paste("ConstBD_ppt","_",tree,"=",mean(ConstBD_ppt[[1]]),sep = ""))
-    
+
     ConstBD_gammaPPDI <- quantile(ConstBD_ppt[[1]],prob=c(0.025,0.975))
 
     print(paste("ConstBD_gammaPPDI",tree,"=",ConstBD_gammaPPDI,sep = ""))
-    
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesConstBD.pdf", sep=""),height=6,width=18)
 
     par(mfrow=c(1,3))
@@ -416,24 +416,24 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       numTaxaDecrBD[i] <- treesDecrBD[[i]]$Nnode + 1 }
 
     numTaxaPPDI_DecrBD <- quantile(numTaxaDecrBD,prob=c(0.025,0.975))
-    
+
     print(paste("numTaxaDecrBD","_",tree,"=",mean(numTaxaDecrBD),sep = ""))
-    
+
     print(paste("numTaxaPPDI_DecrBD",tree,"=",numTaxaPPDI_DecrBD,sep = ""))
-    
+
 
     observedGamma <- gammaStat(tree_object)
 
     DecrBD_ppt <- tess.PosteriorPredictiveTest(treesDecrBD,tree_object,
                                                gammaStat)
-    
+
     print(paste("DecrBD_ppt","_",tree,"=",mean(DecrBD_ppt[[1]]),sep = ""))
-    
-    
+
+
     DecrBD_gammaPPDI <- quantile(DecrBD_ppt[[1]],prob=c(0.025,0.975))
 
     print(paste("DecrBD_gammaPPDI",tree,"=",DecrBD_gammaPPDI,sep = ""))
-    
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesDecrBD.pdf", sep=""),height=6,width=18)
 
     par(mfrow=c(1,3))
@@ -482,23 +482,23 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       numTaxaEpisodicBD[i] <- treesEpisodicBD[[i]]$Nnode + 1 }
 
     numTaxaPPDI_EpisodicBD <- quantile(numTaxaEpisodicBD,prob=c(0.025,0.975))
-    
+
     print(paste("numTaxaEpisodicBD","_",tree,"=",mean(numTaxaEpisodicBD),sep = ""))
     print(paste("numTaxaPPDI_EpisodicBD",tree,"=",numTaxaPPDI_EpisodicBD,sep = ""))
-    
-    
+
+
     observedGamma <- gammaStat(tree_object)
 
     EpisodicBD_ppt <- tess.PosteriorPredictiveTest(treesEpisodicBD,tree_object,
                                                    gammaStat)
-    
+
     print(paste("EpisodicBD_ppt","_",tree,"=",mean(EpisodicBD_ppt[[1]]),sep = ""))
-    
-    
+
+
     EpisodicBD_gammaPPDI <- quantile(EpisodicBD_ppt[[1]],prob=c(0.025,0.975))
-    
+
     print(paste("EpisodicBD_gammaPPDI",tree,"=",EpisodicBD_gammaPPDI,sep = ""))
-    
+
 
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesEpisodicBD.pdf", sep=""),height=6,width=18)
 
@@ -522,10 +522,10 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
 
     dev.off()
 
-    
+
     mean(EpisodicBD_ppt[[1]] >= observedGamma)
-    
-    
+
+
     ## PPD for MassExtinction
 
     simMassExtinctionBD <- function(params) {
@@ -551,9 +551,9 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     numTaxaMassExtinctionBD <- c()
     for (i in 1:length(treesMassExtinctionBD)){
       numTaxaMassExtinctionBD[i] <- treesMassExtinctionBD[[i]]$Nnode + 1 }
-    
+
     numTaxaPPDI_MassExtinctionBD <- quantile(numTaxaMassExtinctionBD,prob=c(0.025,0.975))
-    
+
     print(paste("numTaxaMassExtinctionBD","_",tree,"=",mean(numTaxaMassExtinctionBD),sep = ""))
     print(paste("numTaxaPPDI_MassExtinctionBD",tree,"=",numTaxaPPDI_MassExtinctionBD,sep = ""))
 
@@ -562,11 +562,11 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     MassExtinctionBD_ppt <- tess.PosteriorPredictiveTest(treesMassExtinctionBD,tree_object,
                                                          gammaStat)
     MassExtinctionBD_gammaPPDI <- quantile(MassExtinctionBD_ppt[[1]],prob=c(0.025,0.975))
-    
+
     print(paste("MassExtinctionBD_ppt","_",tree,"=",mean(MassExtinctionBD_ppt[[1]]),sep = ""))
-    
+
     print(paste("MassExtinctionBD_gammaPPDI",tree,"=",MassExtinctionBD_gammaPPDI,sep = ""))
-    
+
     pdf(paste(out_dir,"/",dataset,"/","plot_PPD_",tree,"_PPD_samplesMassExtinctionBD.pdf", sep=""),height=6,width=18)
 
     par(mfrow=c(1,3))
