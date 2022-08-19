@@ -1,0 +1,10 @@
+"M0","M1","BF"
+"ConstBD","MassExtinctionBD",80.9832752407396
+"ConstBD","EpisodicBD",47.3618051286134
+"EpisodicBD","MassExtinctionBD",33.6214701121263
+"ConstBD","ConstBD",0
+"EpisodicBD","EpisodicBD",0
+"MassExtinctionBD","MassExtinctionBD",0
+"MassExtinctionBD","EpisodicBD",-33.6214701121263
+"EpisodicBD","ConstBD",-47.3618051286134
+"MassExtinctionBD","ConstBD",-80.9832752407396

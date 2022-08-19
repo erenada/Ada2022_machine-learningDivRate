@@ -40,7 +40,7 @@ library(geiger)
 
 Sys.setenv("DISPLAY"=":0.0")
 
-input_dir <- "/data/schwartzlab/eren/Chapter3/UltrametricTrees"
+input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/output"
 
 #test_input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/"
 
@@ -525,7 +525,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     
     mean(EpisodicBD_ppt[[1]] >= observedGamma)
     
-
+    
     ## PPD for MassExtinction
 
     simMassExtinctionBD <- function(params) {
