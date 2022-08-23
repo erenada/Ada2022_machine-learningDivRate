@@ -8,7 +8,7 @@ library(phangorn)
 
 #Dataset 1
 
-s_tree_Dataset1 <- read.tree("./AlexOriginalTrees/Dataset1/s_tree.trees")
+s_tree_Dataset1 <- root(read.tree("./AlexOriginalTrees/Dataset1/s_tree.trees"), "5", resolve.root = T)
 inf_test_Dataset1 <- root(read.tree("./AlexOriginalTrees/Dataset1/inferenceTest.treefile"), "5", resolve.root = T)
 inf_best800_Dataset1 <- root(read.tree("./AlexOriginalTrees/Dataset1/inference_fong_best800.txt.treefile"), "5", resolve.root = T)
 inf_best600_Dataset1 <- root(read.tree("./AlexOriginalTrees/Dataset1/inference_fong_best600.txt.treefile"), "5", resolve.root = T)
@@ -81,7 +81,7 @@ write.tree(rand3_Dataset2, file = "./RelTime/input/Dataset2/inference_wickett_ra
 
 #Dataset 3
 s_tree_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/s_tree.trees"), "7", resolve.root = T)
-inf_tree_Data3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inferenceTest.treefile"), "7", resolve.root = T)
+inf_tree_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inferenceTest.treefile"), "7", resolve.root = T)
 inf_best800_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inference_liu_best800.txt.treefile"), "7", resolve.root = T)
 inf_best600_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inference_liu_best600.txt.treefile"), "7", resolve.root = T)
 inf_worst600_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inference_liu_worst600.txt.treefile"), "7", resolve.root = T)
@@ -92,7 +92,7 @@ rand3_Dataset3 <- root(read.tree("./AlexOriginalTrees/Dataset3/inference_liu_ran
 
 
 #drop branch support
-inf_tree_Data3$node.label <- NULL
+inf_tree_Dataset3$node.label <- NULL
 inf_best800_Dataset3$node.label <- NULL
 inf_best600_Dataset3$node.label <- NULL
 inf_worst600_Dataset3$node.label <- NULL
@@ -104,7 +104,7 @@ rand3_Dataset3$node.label <- NULL
 # write trees
 
 write.tree(s_tree_Dataset3, file = "./RelTime/input/Dataset3/s_tree.nwk")
-write.tree(inf_tree_Data3, file = "./RelTime/input/Dataset3/inferenceTest.treefile.nwk")
+write.tree(inf_tree_Dataset3, file = "./RelTime/input/Dataset3/inferenceTest.treefile.nwk")
 write.tree(inf_best800_Dataset3, file = "./RelTime/input/Dataset3/inference_liu_best800.nwk")
 write.tree(inf_best600_Dataset3, file = "./RelTime/input/Dataset3/inference_liu_best600.nwk")
 write.tree(inf_worst600_Dataset3, file = "./RelTime/input/Dataset3/inference_liu_worst600.nwk")
@@ -151,7 +151,7 @@ write.tree(rand3_Dataset4, file = "./RelTime/input/Dataset4/inference_mcgowen_ra
 ## check RelTimeTrees & make it ultrametric
 
 
-## Dataset1
+## Dataset1-4
 
 
 for(treefile in list.files("./RelTime/output/Dataset4/")){
@@ -159,6 +159,7 @@ for(treefile in list.files("./RelTime/output/Dataset4/")){
   tree <- nnls.tree(cophenetic(tree), tree, rooted = TRUE)
   write.tree(tree, file=paste("./RelTime/output/Dataset4/",treefile,sep = ""))
 }
+
 
 
 

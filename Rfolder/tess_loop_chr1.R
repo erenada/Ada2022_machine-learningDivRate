@@ -7,32 +7,6 @@ library(dplyr)
 library(TESS)
 library(geiger)
 
-## scaling the true species tree's branch lengths
-
-#dataset1Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
-
-#dataset1Tree <- rescale(dataset1Tree, "depth", 1)
-
-#write.tree(dataset1Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
-
-#dataset2Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset2/s_tree.trees")
-
-#dataset2Tree <- rescale(dataset2Tree, "depth", 1)
-
-#write.tree(dataset2Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/s_tree.trees")
-
-#dataset3Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
-
-#dataset3Tree <- rescale(dataset3Tree, "depth", 1)
-
-#write.tree(dataset3Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset3/s_tree.trees")
-
-#dataset4Tree <- read.tree("/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
-
-#dataset4Tree <- rescale(dataset4Tree, "depth", 1)
-
-#write.tree(dataset4Tree, file = "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset4/s_tree.trees")
-
 
 ## # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
@@ -40,32 +14,18 @@ library(geiger)
 
 Sys.setenv("DISPLAY"=":0.0")
 
-input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/output"
+input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/input"
 
-#test_input_dir <- "/Users/eren/Documents/GitHub/Chapter3/UltrametricTrees/Dataset1/"
-
-out_dir <- "/data/schwartzlab/eren/Chapter3/outdir"
-
-#tree_object <- read.tree("../../Bird_SISRS/Reference_Trees/JarvisFinalTree.nwk")
-
-#dev.off()
-
-#dataset <- "Dataset2"
-
-#tree_object <- read.tree("./RelTime/output/Dataset1/inferenceTest.nwk")
-
-#plot(tree_object)
-
-#gammaStat(tree_object)
+out_dir <- "/data/schwartzlab/eren/Chapter3/outdir1"
 
 
 for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
   for(tree in list.files(paste(input_dir,dataset, sep = "/"))){
 
     tree_object <- read.tree(paste(input_dir,"/",dataset,"/",tree, sep = ""))
-    
-    tree_object <- nnls.tree(cophenetic(tree_object), tree_object, rooted = TRUE)
-    
+
+    tree_object <- chronos(tree_object, lambda = 1, model = "correlated" )
+
     tree_object <- rescale(tree_object, model = "depth", 1)
 
     times <- as.numeric(branching.times(tree_object))
@@ -295,7 +255,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       burnin = 100,
       K = 50)
 
-      marginalLikelihoodEpisodicBD <- tess.steppingStoneSampling(
+    marginalLikelihoodEpisodicBD <- tess.steppingStoneSampling(
       likelihoodFunction = likelihoodEpisodicBD,
       priors = priorsEpisodicBD,
       parameters = runif(4,0,1),
@@ -352,7 +312,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
       return (ConstBD_tree) }
 
 
-    
+
     treesConstBD <- tess.PosteriorPrediction(simConstBD,samplesConstBD)
 
 
