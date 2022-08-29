@@ -1,0 +1,17 @@
+"M0","M1","BF"
+"DecrBD","MassExtinctionBD",52.0904161047743
+"ConstBD","MassExtinctionBD",49.6708141058573
+"DecrBD","EpisodicBD",29.2809670180725
+"ConstBD","EpisodicBD",26.8613650191555
+"EpisodicBD","MassExtinctionBD",22.8094490867018
+"DecrBD","ConstBD",2.419601998917
+"ConstBD","ConstBD",0
+"DecrBD","DecrBD",0
+"EpisodicBD","EpisodicBD",0
+"MassExtinctionBD","MassExtinctionBD",0
+"ConstBD","DecrBD",-2.419601998917
+"MassExtinctionBD","EpisodicBD",-22.8094490867018
+"EpisodicBD","ConstBD",-26.8613650191555
+"EpisodicBD","DecrBD",-29.2809670180725
+"MassExtinctionBD","ConstBD",-49.6708141058573
+"MassExtinctionBD","DecrBD",-52.0904161047743
