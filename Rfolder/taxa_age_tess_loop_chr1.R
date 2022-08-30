@@ -14,13 +14,12 @@ library(geiger)
 
 Sys.setenv("DISPLAY"=":0.0")
 
+input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/input"
 
-for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recursive = F,full.names = F)){
-  for(tree in list.files(paste("/data/schwartzlab/eren/Chapter3/RelTime/input",dataset, sep = "/"))){
+out_dir <- "/data/schwartzlab/eren/Chapter3/taxa_age_outdir1"
 
-  input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/input"
-
-  out_dir <- "/data/schwartzlab/eren/Chapter3/taxa_age_outdir1"
+for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
+  for(tree in list.files(paste(input_dir,dataset, sep = "/"))){
 
     tree_object <- read.tree(paste(input_dir,"/",dataset,"/",tree, sep = ""))
 
@@ -570,8 +569,6 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
       points(observedGamma,0,pch="x") + title(sub = "(C)", xlab = "Gamma Value")
 
     dev.off()
-
-    rm(list = ls(all.names = TRUE))
 
   }
 }
