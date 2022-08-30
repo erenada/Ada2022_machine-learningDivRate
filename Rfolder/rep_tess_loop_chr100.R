@@ -511,6 +511,8 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
                                               age = tmrca,
                                               lambda = MassExtinctionBD_speciation,
                                               mu = MassExtinctionBD_extinction,
+                                              massExtinctionTimes = MassExtinctionBD_time,
+                                              massExtinctionSurvivalProbabilities = 0.1,
                                               samplingProbability = 1.0,
                                               MRCA = TRUE)[[1]]
         if (MassExtinctionBD_tree$Nnode > 1) break }

@@ -13,4 +13,4 @@ module purge
 
 module load R/4.2.0-foss-2021b
 
-Rscript rep_tess_loop_chr10
+Rscript rep_tess_loop_chr10.R

@@ -1,5 +1,5 @@
 #!/bin/bash
-#SBATCH --job-name="rep_tess_run100"
+#SBATCH --job-name="taxa_age_tess_run10"
 #SBATCH --time=200:00:00  # walltime limit (HH:MM:SS)
 #SBATCH --nodes=1   # number of nodes
 #SBATCH --ntasks-per-node=20   # CHANGE THIS to processor core(s) per node
@@ -13,4 +13,4 @@ module purge
 
 module load R/4.2.0-foss-2021b
 
-Rscript rep_tess_loop_chr100.R
+Rscript taxa_age_tess_loop_chr10.R

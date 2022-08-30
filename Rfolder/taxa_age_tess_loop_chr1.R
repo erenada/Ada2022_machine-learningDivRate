@@ -30,6 +30,8 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
 
     times <- as.numeric(branching.times(tree_object))
 
+    numberoftaxa <- length(tree_object$tip.label)
+
     #defining priors for constant birth-death model
 
     ConstBD_prior_delta <- function(x) { dexp(x,rate=10.0,log=TRUE) }
@@ -302,15 +304,15 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
       ConstBD_extinction <- params[2]
 
       repeat {
-        ConstBD_tree <- tess.sim.age(n = 1,
-                                     age = tmrca,
-                                     lambda = ConstBD_speciation,
-                                     mu = ConstBD_extinction,
-                                     samplingProbability = 1.0,
-                                     MRCA = TRUE)[[1]]
+        ConstBD_tree <- tess.sim.taxa.age(n = 1,
+                                          nTaxa = numberoftaxa,
+                                          age = tmrca,
+                                          lambda = ConstBD_speciation,
+                                          mu = ConstBD_extinction,
+                                          samplingProbability = 1.0,
+                                          MRCA = TRUE)[[1]]
         if (ConstBD_tree$Nnode > 1) break }
       return (ConstBD_tree) }
-
 
 
     treesConstBD <- tess.PosteriorPrediction(simConstBD,samplesConstBD)
@@ -370,12 +372,15 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
       DecrBD_extinction <- function(t) params[1]
 
       repeat {
-        DecrBD_tree <- tess.sim.age(n = 1,
-                                    age = tmrca,
-                                    lambda = DecrBD_speciation,
-                                    mu = DecrBD_extinction,
-                                    samplingProbability = 1.0,
-                                    MRCA = TRUE)[[1]]
+        DecrBD_tree <- tess.sim.taxa.age(n = 1,
+                                         nTaxa = numberoftaxa,
+                                         age = tmrca,
+                                         lambda = DecrBD_speciation,
+                                         mu = DecrBD_extinction,
+                                         samplingProbability = 1.0,
+                                         MRCA = TRUE)[[1]]
+
+
         if (DecrBD_tree$Nnode > 1) break }
       return (DecrBD_tree) }
 
@@ -436,12 +441,14 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
       EpisodicBD_extinction <- c(params[2],params[4])
 
       repeat {
-        EpisodicBD_tree <- tess.sim.age(n = 1,
-                                        age = tmrca,
-                                        lambda = EpisodicBD_speciation,
-                                        mu = EpisodicBD_extinction,
-                                        samplingProbability = 1.0,
-                                        MRCA = TRUE)[[1]]
+        EpisodicBD_tree <- tess.sim.taxa.age(n = 1,
+                                             nTaxa = numberoftaxa,
+                                             age = tmrca,
+                                             lambda = EpisodicBD_speciation,
+                                             mu = EpisodicBD_extinction,
+                                             samplingProbability = 1.0,
+                                             MRCA = TRUE)[[1]]
+
         if (EpisodicBD_tree$Nnode > 1) break }
       return (EpisodicBD_tree) }
 
@@ -507,14 +514,16 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
       MassExtinctionBD_time <- params[3]
 
       repeat {
-        MassExtinctionBD_tree <- tess.sim.age(n = 1,
-                                              age = tmrca,
-                                              lambda = MassExtinctionBD_speciation,
-                                              mu = MassExtinctionBD_extinction,
-                                              massExtinctionTimes = MassExtinctionBD_time,
-                                              massExtinctionSurvivalProbabilities = 0.1,
-                                              samplingProbability = 1.0,
-                                              MRCA = TRUE)[[1]]
+        MassExtinctionBD_tree <- tess.sim.taxa.age(n = 1,
+                                                   nTaxa = numberoftaxa,
+                                                   age = tmrca,
+                                                   lambda = MassExtinctionBD_speciation,
+                                                   mu = MassExtinctionBD_extinction,
+                                                   samplingProbability = 1.0,
+                                                   massExtinctionTimes = MassExtinctionBD_time,
+                                                   massExtinctionSurvivalProbabilities = 0.1,
+                                                   MRCA = TRUE)[[1]]
+
         if (MassExtinctionBD_tree$Nnode > 1) break }
       return (MassExtinctionBD_tree) }
 
