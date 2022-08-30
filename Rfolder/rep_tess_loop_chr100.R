@@ -20,7 +20,7 @@ for(dataset in list.dirs("/data/schwartzlab/eren/Chapter3/RelTime/input", recurs
 
   input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/input"
 
-  out_dir <- "/data/schwartzlab/eren/Chapter3/rep_outdir1"
+  out_dir <- "/data/schwartzlab/eren/Chapter3/rep_outdir100"
 
     tree_object <- read.tree(paste(input_dir,"/",dataset,"/",tree, sep = ""))
 
