@@ -16,7 +16,7 @@ Sys.setenv("DISPLAY"=":0.0")
 
 input_dir <- "/data/schwartzlab/eren/Chapter3/RelTime/input"
 
-out_dir <- "/data/schwartzlab/eren/Chapter3/rep_outdir1"
+out_dir <- "/data/schwartzlab/eren/Chapter3/outTM10"
 
 
 for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
@@ -25,7 +25,7 @@ for(dataset in list.dirs(input_dir, recursive = F,full.names = F)){
     tree_object <- read.tree(paste(input_dir,"/",dataset,"/",tree, sep = ""))
 
     tree_object <- chronos(tree_object, lambda = 1, model = "correlated" )
-    
+
     tree_object$edge.length <- tree_object$edge.length*10
 
     #tree_object <- rescale(tree_object, model = "depth", 1)
